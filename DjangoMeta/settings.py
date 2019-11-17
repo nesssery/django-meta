@@ -39,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'metas.apps.MetasConfig',
-    # Django-Meta permet aux développeurs Django d'ajouter rapidement des balises méta et des propriétés OpenGraph,
-    # Twitter et Google Plus à leurs pages HTML
     'meta',
-    #Sekizai utilise render_block et addtoblock pour gérer des extraits de code uniques
+    'meta_mixin',
     'sekizai',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
 ]
 
 MIDDLEWARE = [
@@ -70,7 +73,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                #Sekizai utilise render_block et addtoblock pour gérer des extraits de code uniques
                 'sekizai.context_processors.sekizai',
             ],
         },
@@ -130,65 +132,106 @@ STATICFILES_DIRS = [
 
 BLOG_URLCONF = 'DjangoMeta.blog_urls'
 
+META_SITE_PROTOCOL = 'http'
+META_SITE_DOMAIN = 'http://nan.ci/'
+META_SITE_TYPE = "website"
+META_SITE_NAME = "Cocody-FM"
+META_IMAGE_URL = STATIC_URL
+DEFAULT_IMAGE = True
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = False
+META_USE_GOOGLEPLUS_PROPERTIES = True
+META_USE_FACEBOOK_PROPERTIES = True
+META_USE_SITES = True
+META_USE_TITLE_TAG = True
+META_OG_NAMESPACES = "Cocody-FM"
+META_OG_SECURE_URL_ITEMS = ('image', 'audio', 'video')
+OG_NAMESPACES = 'Cocody-FM'
+INCLUDE_KEYWORDS = True
+DEFAULT_KEYWORDS = 'Cocody Fm Radio Cocody'
+DEFAULT_TYPE = True
+FB_TYPE = True
+FB_PROFILE_ID = True
+TWITTER_TYPE = True
+FB_APPID = True
+FB_PUBLISHER = True
+FB_AUTHOR_URL = True
+FB_PAGES = True
+TWITTER_TYPES = True
+TWITTER_SITE = True
+TWITTER_AUTHOR = True
+GPLUS_TYPE = True
+GPLUS_TYPES = True
+GPLUS_AUTHOR = True
+GPLUS_PUBLISHER = True
 
-SITE_PROTOCOL = getattr(django_settings, 'META_SITE_PROTOCOL', None)
-SITE_DOMAIN = getattr(django_settings, 'META_SITE_DOMAIN', None)
-SITE_TYPE = getattr(django_settings, 'META_SITE_TYPE', None)
-SITE_NAME = getattr(django_settings, 'META_SITE_NAME', None)
-INCLUDE_KEYWORDS = getattr(django_settings, 'META_INCLUDE_KEYWORDS', [])
-DEFAULT_KEYWORDS = getattr(django_settings, 'META_DEFAULT_KEYWORDS', [])
-IMAGE_URL = getattr(django_settings, 'META_IMAGE_URL', django_settings.STATIC_URL)
-USE_OG_PROPERTIES = getattr(django_settings, 'META_USE_OG_PROPERTIES', False)
-USE_TWITTER_PROPERTIES = getattr(django_settings, 'META_USE_TWITTER_PROPERTIES', False)
-USE_FACEBOOK_PROPERTIES = getattr(django_settings, 'META_USE_FACEBOOK_PROPERTIES', False)
-USE_GOOGLEPLUS_PROPERTIES = getattr(django_settings, 'META_USE_GOOGLEPLUS_PROPERTIES', False)
-USE_SITES = getattr(django_settings, 'META_USE_SITES', False)
-USE_TITLE_TAG = getattr(django_settings, 'META_USE_TITLE_TAG', False)
-OG_NAMESPACES = getattr(django_settings, 'META_OG_NAMESPACES', None)
+# SITE_PROTOCOL = getattr(django_settings, 'META_SITE_PROTOCOL', True)
+# SITE_DOMAIN = getattr(django_settings, 'META_SITE_DOMAIN', True)
+# SITE_TYPE = getattr(django_settings, 'META_SITE_TYPE', True)
+# SITE_NAME = getattr(django_settings, 'META_SITE_NAME', True)
+# INCLUDE_KEYWORDS = getattr(django_settings, 'META_INCLUDE_KEYWORDS', [])
+# DEFAULT_KEYWORDS = getattr(django_settings, 'META_DEFAULT_KEYWORDS', [])
+# IMAGE_URL = getattr(django_settings, 'META_IMAGE_URL', django_settings.STATIC_URL)
+# USE_OG_PROPERTIES = getattr(django_settings, 'META_USE_OG_PROPERTIES', True)
+# USE_TWITTER_PROPERTIES = getattr(django_settings, 'META_USE_TWITTER_PROPERTIES', True)
+# USE_FACEBOOK_PROPERTIES = getattr(django_settings, 'META_USE_FACEBOOK_PROPERTIES', True)
+# USE_GOOGLEPLUS_PROPERTIES = getattr(django_settings, 'META_USE_GOOGLEPLUS_PROPERTIES', True)
+# USE_SITES = getattr(django_settings, 'META_USE_SITES', True)
+# USE_TITLE_TAG = getattr(django_settings, 'META_USE_TITLE_TAG', True)
+# OG_NAMESPACES = getattr(django_settings, 'META_OG_NAMESPACES', True)
+#
+# OBJECT_TYPES = (
+#     ('Article', _('Article')),
+#     ('Website', _('Website')),
+# )
+# TWITTER_TYPES = (
+#     ('summary', _('Summary Card')),
+#     ('summary_large_image', _('Summary Card with Large Image')),
+#     ('product', _('Product')),
+#     ('photo', _('Photo')),
+#     ('player', _('Player')),
+#     ('app', _('App')),
+# )
+# FB_TYPES = OBJECT_TYPES
+# GPLUS_TYPES = (
+#     ('Article', _('Article')),
+#     ('Blog', _('Blog')),
+#     ('WebPage', _('Page')),
+#     ('WebSite', _('WebSite')),
+#     ('Event', _('Event')),
+#     ('Product', _('Product')),
+#     ('Place', _('Place')),
+#     ('Person', _('Person')),
+#     ('Book', _('Book')),
+#     ('LocalBusiness', _('LocalBusiness')),
+#     ('Organization', _('Organization')),
+#     ('Review', _('Review')),
+# )
+#
+# OG_SECURE_URL_ITEMS = getattr(django_settings, 'META_OG_SECURE_URL_ITEMS', ('image', 'audio', 'video'))
+# DEFAULT_IMAGE = getattr(django_settings, 'META_DEFAULT_IMAGE', True)
+# DEFAULT_TYPE = getattr(django_settings, 'META_SITE_TYPE', OBJECT_TYPES[0][0])
+# FB_TYPE = getattr(django_settings, 'META_FB_TYPE', OBJECT_TYPES[0][0])
+# FB_TYPES = getattr(django_settings, 'META_FB_TYPES', FB_TYPES)
+# FB_APPID = getattr(django_settings, 'META_FB_APPID', True)
+# FB_PROFILE_ID = getattr(django_settings, 'META_FB_PROFILE_ID', True)
+# FB_PUBLISHER = getattr(django_settings, 'META_FB_PUBLISHER', True)
+# FB_AUTHOR_URL = getattr(django_settings, 'META_FB_AUTHOR_URL', True)
+# FB_PAGES = getattr(django_settings, 'META_FB_PAGES', True)
+# TWITTER_TYPE = getattr(django_settings, 'META_TWITTER_TYPE', TWITTER_TYPES[0][0])
+# TWITTER_TYPES = getattr(django_settings, 'META_TWITTER_TYPES', TWITTER_TYPES)
+# TWITTER_SITE = getattr(django_settings, 'META_TWITTER_SITE', True)
+# TWITTER_AUTHOR = getattr(django_settings, 'META_TWITTER_AUTHOR', True)
+# GPLUS_TYPE = getattr(django_settings, 'META_GPLUS_TYPE', GPLUS_TYPES[0][0])
+# GPLUS_TYPES = getattr(django_settings, 'META_GPLUS_TYPES', GPLUS_TYPES)
+# GPLUS_AUTHOR = getattr(django_settings, 'META_GPLUS_AUTHOR', True)
+# GPLUS_PUBLISHER = getattr(django_settings, 'META_GPLUS_PUBLISHER', True)
 
-OBJECT_TYPES = (
-    ('Article', _('Article')),
-    ('Website', _('Website')),
-)
-TWITTER_TYPES = (
-    ('summary', _('Summary Card')),
-    ('summary_large_image', _('Summary Card with Large Image')),
-    ('product', _('Product')),
-    ('photo', _('Photo')),
-    ('player', _('Player')),
-    ('app', _('App')),
-)
-FB_TYPES = OBJECT_TYPES
-GPLUS_TYPES = (
-    ('Article', _('Article')),
-    ('Blog', _('Blog')),
-    ('WebPage', _('Page')),
-    ('WebSite', _('WebSite')),
-    ('Event', _('Event')),
-    ('Product', _('Product')),
-    ('Place', _('Place')),
-    ('Person', _('Person')),
-    ('Book', _('Book')),
-    ('LocalBusiness', _('LocalBusiness')),
-    ('Organization', _('Organization')),
-    ('Review', _('Review')),
+# Django allauth
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-OG_SECURE_URL_ITEMS = getattr(django_settings, 'META_OG_SECURE_URL_ITEMS', ('image', 'audio', 'video'))
-DEFAULT_IMAGE = getattr(django_settings, 'META_DEFAULT_IMAGE', '')
-DEFAULT_TYPE = getattr(django_settings, 'META_SITE_TYPE', OBJECT_TYPES[0][0])
-FB_TYPE = getattr(django_settings, 'META_FB_TYPE', OBJECT_TYPES[0][0])
-FB_TYPES = getattr(django_settings, 'META_FB_TYPES', FB_TYPES)
-FB_APPID = getattr(django_settings, 'META_FB_APPID', '')
-FB_PROFILE_ID = getattr(django_settings, 'META_FB_PROFILE_ID', '')
-FB_PUBLISHER = getattr(django_settings, 'META_FB_PUBLISHER', '')
-FB_AUTHOR_URL = getattr(django_settings, 'META_FB_AUTHOR_URL', '')
-FB_PAGES = getattr(django_settings, 'META_FB_PAGES', '')
-TWITTER_TYPE = getattr(django_settings, 'META_TWITTER_TYPE', TWITTER_TYPES[0][0])
-TWITTER_TYPES = getattr(django_settings, 'META_TWITTER_TYPES', TWITTER_TYPES)
-TWITTER_SITE = getattr(django_settings, 'META_TWITTER_SITE', '')
-TWITTER_AUTHOR = getattr(django_settings, 'META_TWITTER_AUTHOR', '')
-GPLUS_TYPE = getattr(django_settings, 'META_GPLUS_TYPE', GPLUS_TYPES[0][0])
-GPLUS_TYPES = getattr(django_settings, 'META_GPLUS_TYPES', GPLUS_TYPES)
-GPLUS_AUTHOR = getattr(django_settings, 'META_GPLUS_AUTHOR', '')
-GPLUS_PUBLISHER = getattr(django_settings, 'META_GPLUS_PUBLISHER', '')
+SITE_ID = 1

@@ -1,29 +1,35 @@
-{% extends 'base.html' %}
-{% load static %}
+{% load meta %}
+<html{% meta_namespaces_gplus %}>
+<head {% meta_namespaces %}>
+    {% include "meta/meta.html" %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<header class="site-header" >
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="background-color: teal">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'index' %}">Django-Meta</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'opengraph' %}">OpenGraph</a>
+              <a class="nav-item nav-link" href="{% url 'sekizai' %}">Sekizai</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="">Facebook</a>
+                <a class="nav-item nav-link" href="">Twitter</a>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+    </header>
 {% block content %}
-<div class="media" style="margin-top: 100px">
-  <img src="{% static 'img/open-graph.png' %}" class="mr-3" alt="...">
-  <div class="media-body">
-    <h5 class="mt-0">Open Graph</h5>
-    <div class="row">
-        <p style="text-align: justify; margin-right: 50px">
-            Définition du protocole Open Graph
-Le définition officielle du protocole Open Graph indique
-que c'est un protocole qui permet à une page web de devenir
-un objet "riche" dans un réseau social.
-
-Plus concrètement, le protocole Open Graph est un ensemble
-de balises qui permet à un webmaster de donner aux principaux
-réseaux sociaux (Facebook, Google +, Twitter, Linked in...)
-des informations précises sur ses pages.
-Ces informations permettront aux réseaux sociaux
-de mieux afficher un lien sur une ces pages qui aurait
-été placé par leur utilisateurs.
-
-Le protocole Open Graph a été crée à l'origine par
-Facebook et est désormais géré par l'Open Web Fondation.
-        </p>
-    </div>
-  </div>
-</div>
 {% endblock content %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>

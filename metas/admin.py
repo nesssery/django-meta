@@ -1,20 +1,14 @@
 from django.contrib import admin
-from .models import MetaModel, OtherMeta
+from .models import MetasModels
 
 
 class MetaModelAdmin(admin.ModelAdmin):
-    list_display = ["nom", "description", "image"]
+    list_display = ["id", "title", "description", "image"]
 
     class Meta:
-        model = MetaModel
+        model = MetasModels
 
 
-admin.site.register(MetaModel, MetaModelAdmin)
+admin.site.register(MetasModels, MetaModelAdmin)
+# admin.site.register(MetaSite)
 
-
-class OtherMetaAdmin(admin.ModelAdmin):
-    class Meta:
-        model = OtherMeta
-
-
-admin.site.register(OtherMeta, OtherMetaAdmin)
