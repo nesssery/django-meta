@@ -2,6 +2,6 @@ django-meta-mixin
 django-sekizai
 Django==2.2.7
 django-meta==1.5.2
-Pillow==6.2.1
+Pillow==9.0.0
 pytz==2019.3
 sqlparse==0.3.0
